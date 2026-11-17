@@ -27,6 +27,23 @@ closed case.
 
 The app's user interface is currently in Spanish.
 
+## Install
+
+1. Download `boseAndroidMgr-<version>.apk` from the [latest release](https://github.com/guilleml/boseAndroidMgr/releases/latest).
+   It requires Android 12 or later.
+2. Open it on the phone. Android asks you to allow installing apps from that source (the browser or
+   the file manager) the first time.
+3. Pair the earbuds with the phone in the system Bluetooth settings, if they aren't already.
+4. Open the app and allow **Nearby devices** (Bluetooth) when asked.
+5. Optional: edit the Quick Settings panel and drag the **Bose Ultra** tile into it.
+
+Release APKs are signed with this certificate (SHA-256), so you can check them with
+`apksigner verify --print-certs`:
+
+```
+55:2B:CC:68:73:39:9B:A5:96:8A:19:5C:46:54:16:F8:B3:D8:C9:8F:D7:2B:22:85:E3:8F:8B:CB:47:1E:30:29
+```
+
 ## Protocol
 
 Documented in BoseMenuBar's [`docs/protocol.md`](https://github.com/guilleml/BoseMenuBar/blob/main/docs/protocol.md).
@@ -46,6 +63,10 @@ adb logcat -s BoseUltra            # hex traffic log
 ```
 
 The earbuds must already be paired with the phone. `minSdk` is 31 (Android 12).
+
+`./gradlew :app:assembleRelease` builds a minified release APK. It is signed only if
+`BOSE_RELEASE_STORE_FILE`, `BOSE_RELEASE_STORE_PASSWORD`, `BOSE_RELEASE_KEY_ALIAS` and
+`BOSE_RELEASE_KEY_PASSWORD` are defined (e.g. in `~/.gradle/gradle.properties`); otherwise it is unsigned.
 
 ## License
 

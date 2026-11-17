@@ -16,9 +16,28 @@ android {
         versionName = "0.1.0"
     }
 
+    // Firma de la release. Los datos van en ~/.gradle/gradle.properties (fuera del repo):
+    //   BOSE_RELEASE_STORE_FILE, BOSE_RELEASE_STORE_PASSWORD, BOSE_RELEASE_KEY_ALIAS, BOSE_RELEASE_KEY_PASSWORD
+    // Sin ellos, la release se genera sin firmar (cualquiera puede compilar el proyecto).
+    val releaseStoreFile = providers.gradleProperty("BOSE_RELEASE_STORE_FILE").orNull
+    signingConfigs {
+        if (releaseStoreFile != null) {
+            create("release") {
+                storeFile = file(releaseStoreFile)
+                storePassword = providers.gradleProperty("BOSE_RELEASE_STORE_PASSWORD").get()
+                keyAlias = providers.gradleProperty("BOSE_RELEASE_KEY_ALIAS").get()
+                keyPassword = providers.gradleProperty("BOSE_RELEASE_KEY_PASSWORD").get()
+            }
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // R8: elimina código y recursos no usados y ofusca. No hay reflexión en la app.
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
