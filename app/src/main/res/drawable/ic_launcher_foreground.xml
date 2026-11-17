@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dos auriculares estilizados. Lienzo de 108 dp; la zona segura es el círculo central de 66 dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Izquierdo: cuerpo redondo y vástago -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M42,38 a10,10 0 1,1 0,20 a10,10 0 1,1 0,-20 z M37,52 h7 v18 a3.5,3.5 0 0,1 -7,0 z" />
+    <!-- Derecho -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M66,38 a10,10 0 1,1 0,20 a10,10 0 1,1 0,-20 z M64,52 h7 v18 a3.5,3.5 0 0,1 -7,0 z" />
+</vector>

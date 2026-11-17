@@ -15,23 +15,48 @@ class MainActivity : ComponentActivity() {
     // tras un giro de pantalla (propiedad delegada, ver HeadphonesViewModel).
     private val viewModel: HeadphonesViewModel by viewModels()
 
+    /** Para no volver a mostrar el diálogo de permiso cada vez que la app vuelve a primer plano. */
+    private var permissionAsked = false
+
     // Petición de permiso en tiempo de ejecución. Sustituye al antiguo onRequestPermissionsResult.
     private val permissionRequest =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            viewModel.connect(granted)
+            viewModel.onForeground(granted)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        permissionAsked = savedInstanceState?.getBoolean("permissionAsked") ?: false
         enableEdgeToEdge()
         setContent {
-            MainScreen(viewModel, onConnect = ::connectWithPermission)
+            MainScreen(viewModel, onRequestPermission = ::requestPermission)
         }
-        if (savedInstanceState == null) connectWithPermission()
     }
 
-    private fun connectWithPermission() {
-        val granted = checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
-        if (granted) viewModel.connect(true) else permissionRequest.launch(Manifest.permission.BLUETOOTH_CONNECT)
+    // onStart/onStop marcan cuándo la app es visible. Solo entonces hay canal abierto (batería).
+    override fun onStart() {
+        super.onStart()
+        if (hasPermission()) viewModel.onForeground(true)
+        else if (!permissionAsked) requestPermission()
+        else viewModel.onForeground(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // En un giro de pantalla la Activity se destruye y se recrea en el acto: no se desconecta.
+        if (!isChangingConfigurations) viewModel.onBackground()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("permissionAsked", permissionAsked)
+    }
+
+    private fun hasPermission() =
+        checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
+
+    private fun requestPermission() {
+        permissionAsked = true
+        permissionRequest.launch(Manifest.permission.BLUETOOTH_CONNECT)
     }
 }
