@@ -2,15 +2,15 @@
 //
 // El tile no abre el canal (batería): muestra lo último que leyó la app o el diálogo.
 // SharedPreferences ≈ un java.util.Properties persistente que Android guarda en un XML privado.
-package local.boseqcultra2.android
+package io.github.guilleml.boseandroidmgr
 
 import android.content.ComponentName
 import android.content.Context
 import android.service.quicksettings.TileService
 import androidx.core.content.edit
-import local.boseqcultra2.android.protocol.BatteryEntry
-import local.boseqcultra2.android.protocol.ModeSlot
-import local.boseqcultra2.android.tile.BoseTileService
+import io.github.guilleml.boseandroidmgr.protocol.BatteryEntry
+import io.github.guilleml.boseandroidmgr.protocol.ModeSlot
+import io.github.guilleml.boseandroidmgr.tile.BoseTileService
 
 data class CachedState(
     val modeIndex: Int?,

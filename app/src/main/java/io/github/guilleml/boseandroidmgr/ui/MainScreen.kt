@@ -3,7 +3,7 @@
 // Compose para quien viene de Java/Swing: cada función @Composable describe la interfaz
 // a partir del estado; no se crean ni se modifican widgets. Cuando cambia un estado que la
 // función ha leído (p. ej. vm.battery), Compose la vuelve a ejecutar ("recomposición").
-package local.boseqcultra2.android.ui
+package io.github.guilleml.boseandroidmgr.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -54,9 +54,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import local.boseqcultra2.android.ConnectionStatus
-import local.boseqcultra2.android.HeadphonesViewModel
-import local.boseqcultra2.android.protocol.EqBand
+import io.github.guilleml.boseandroidmgr.ConnectionStatus
+import io.github.guilleml.boseandroidmgr.HeadphonesViewModel
+import io.github.guilleml.boseandroidmgr.protocol.EqBand
 
 @Composable
 fun MainScreen(vm: HeadphonesViewModel, onRequestPermission: () -> Unit) {

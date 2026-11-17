@@ -6,7 +6,7 @@
 //
 // Un TileService es un Service que el sistema enlaza (bind) mientras el panel está visible:
 // onStartListening/onStopListening marcan ese intervalo.
-package local.boseqcultra2.android.tile
+package io.github.guilleml.boseandroidmgr.tile
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -20,10 +20,10 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import local.boseqcultra2.android.MainActivity
-import local.boseqcultra2.android.ModePickerActivity
-import local.boseqcultra2.android.R
-import local.boseqcultra2.android.StateCache
+import io.github.guilleml.boseandroidmgr.MainActivity
+import io.github.guilleml.boseandroidmgr.ModePickerActivity
+import io.github.guilleml.boseandroidmgr.R
+import io.github.guilleml.boseandroidmgr.StateCache
 
 class BoseTileService : TileService() {
 

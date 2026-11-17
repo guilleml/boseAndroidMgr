@@ -1,6 +1,6 @@
 // Comandos y decodificadores. Solo lo documentado en BoseMenuBar/docs/protocol.md;
 // cada elemento cita su sección. Portado de tools/bt-control/Sources/BoseKit/BoseProtocol.swift.
-package local.boseqcultra2.android.protocol
+package io.github.guilleml.boseandroidmgr.protocol
 
 /** Peticiones (§2–§5). */
 object BoseCommand {

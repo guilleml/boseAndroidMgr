@@ -4,16 +4,16 @@ plugins {
 }
 
 android {
-    namespace = "local.boseqcultra2.android"
+    namespace = "io.github.guilleml.boseandroidmgr"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "local.boseqcultra2.android"
+        applicationId = "io.github.guilleml.boseandroidmgr"
         // 31 = Android 12: permiso BLUETOOTH_CONNECT sin los permisos de ubicación antiguos.
         minSdk = 31
         targetSdk = 37
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
     }
 
     // Firma de la release. Los datos van en ~/.gradle/gradle.properties (fuera del repo):

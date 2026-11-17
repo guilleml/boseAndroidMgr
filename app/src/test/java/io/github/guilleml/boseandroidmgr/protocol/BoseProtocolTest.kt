@@ -1,5 +1,5 @@
 // Pruebas con los mensajes literales del brief y de BoseMenuBar (docs/protocol.md, BoseKitTests).
-package local.boseqcultra2.android.protocol
+package io.github.guilleml.boseandroidmgr.protocol
 
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals

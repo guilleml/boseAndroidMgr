@@ -6,14 +6,14 @@
 //    `Listener` EN ESE HILO; quien lo use debe pasarlo al hilo principal (lo hace el ViewModel).
 //  - Las escrituras van a un executor de un solo hilo para no bloquear la interfaz y para
 //    que salgan en orden.
-package local.boseqcultra2.android.bluetooth
+package io.github.guilleml.boseandroidmgr.bluetooth
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.util.Log
-import local.boseqcultra2.android.protocol.BoseMessage
-import local.boseqcultra2.android.protocol.MessageParser
+import io.github.guilleml.boseandroidmgr.protocol.BoseMessage
+import io.github.guilleml.boseandroidmgr.protocol.MessageParser
 import java.io.IOException
 import java.util.UUID
 import java.util.concurrent.ExecutorService

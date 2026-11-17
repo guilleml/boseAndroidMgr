@@ -7,7 +7,7 @@
 // Nota para Java: `Byte` en Kotlin tiene signo, igual que en Java (0xff = -1). Por eso la
 // cabecera se guarda como `Int` 0..255 (más legible) y la carga como `ByteArray`, y para leer
 // un byte de la carga sin signo se usa `payloadU(i)` (equivale a `b & 0xff` en Java).
-package local.boseqcultra2.android.protocol
+package io.github.guilleml.boseandroidmgr.protocol
 
 class BoseMessage(
     val block: Int,

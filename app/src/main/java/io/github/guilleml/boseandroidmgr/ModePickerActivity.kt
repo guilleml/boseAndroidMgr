@@ -5,7 +5,7 @@
 // modo, espera la confirmación y se cierra. Al desaparecer (onStop) el canal se cierra.
 // Si la app principal estaba en pantalla, pasa a segundo plano y suelta su canal antes: los
 // auriculares solo admiten un cliente por equipo.
-package local.boseqcultra2.android
+package io.github.guilleml.boseandroidmgr
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -46,7 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import local.boseqcultra2.android.tile.BoseTileService
+import io.github.guilleml.boseandroidmgr.tile.BoseTileService
 
 class ModePickerActivity : ComponentActivity() {
     private val viewModel: HeadphonesViewModel by viewModels()

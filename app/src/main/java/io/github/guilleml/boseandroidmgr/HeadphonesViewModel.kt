@@ -12,7 +12,7 @@
 // Batería (prioridad del proyecto): a diferencia de macOS, el canal solo está abierto mientras
 // la app está visible (onForeground/onBackground). En segundo plano no hay canal, ni consulta
 // periódica, ni reintentos, ni receptores registrados.
-package local.boseqcultra2.android
+package io.github.guilleml.boseandroidmgr
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -35,14 +35,14 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.lifecycle.AndroidViewModel
-import local.boseqcultra2.android.bluetooth.BoseConnection
-import local.boseqcultra2.android.bluetooth.LOG_TAG
-import local.boseqcultra2.android.protocol.BatteryEntry
-import local.boseqcultra2.android.protocol.BoseCommand
-import local.boseqcultra2.android.protocol.BoseDecode
-import local.boseqcultra2.android.protocol.BoseMessage
-import local.boseqcultra2.android.protocol.EqBand
-import local.boseqcultra2.android.protocol.ModeSlot
+import io.github.guilleml.boseandroidmgr.bluetooth.BoseConnection
+import io.github.guilleml.boseandroidmgr.bluetooth.LOG_TAG
+import io.github.guilleml.boseandroidmgr.protocol.BatteryEntry
+import io.github.guilleml.boseandroidmgr.protocol.BoseCommand
+import io.github.guilleml.boseandroidmgr.protocol.BoseDecode
+import io.github.guilleml.boseandroidmgr.protocol.BoseMessage
+import io.github.guilleml.boseandroidmgr.protocol.EqBand
+import io.github.guilleml.boseandroidmgr.protocol.ModeSlot
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -421,7 +421,7 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
     /**
      * Solo en compilaciones de depuración: órdenes desde adb para las pruebas, aunque la
      * pantalla esté bloqueada (un broadcast llega al proceso; un intent a la Activity, no).
-     *   adb shell am broadcast -a local.boseqcultra2.android.DEBUG -p local.boseqcultra2.android --es cmd mode --ei index 1
+     *   adb shell am broadcast -a io.github.guilleml.boseandroidmgr.DEBUG -p io.github.guilleml.boseandroidmgr --es cmd mode --ei index 1
      *   … --es cmd eq --ei band 1 --ei value -1        … --es cmd refresh
      * Pasan por setMode / setEqualizer / refresh, con sus mismas comprobaciones.
      */
@@ -446,7 +446,7 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
     init {
         if (debuggable) {
             // RECEIVER_EXPORTED: tiene que aceptar emisores externos (el shell de adb).
-            ContextCompat.registerReceiver(app, debugReceiver, IntentFilter("local.boseqcultra2.android.DEBUG"), ContextCompat.RECEIVER_EXPORTED)
+            ContextCompat.registerReceiver(app, debugReceiver, IntentFilter("io.github.guilleml.boseandroidmgr.DEBUG"), ContextCompat.RECEIVER_EXPORTED)
         }
     }
 

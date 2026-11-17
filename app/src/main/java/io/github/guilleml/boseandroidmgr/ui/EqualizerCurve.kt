@@ -7,7 +7,7 @@
 //
 // En Compose no se hereda de View ni se sobrescribe onDraw: `Canvas { … }` recibe un DrawScope
 // (parecido al Graphics2D de Swing) y `pointerInput` instala el manejo de gestos.
-package local.boseqcultra2.android.ui
+package io.github.guilleml.boseandroidmgr.ui
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -35,7 +35,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import local.boseqcultra2.android.protocol.EqBand
+import io.github.guilleml.boseandroidmgr.protocol.EqBand
 import kotlin.math.roundToInt
 
 @Composable

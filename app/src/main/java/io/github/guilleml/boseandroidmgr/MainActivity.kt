@@ -1,4 +1,4 @@
-package local.boseqcultra2.android
+package io.github.guilleml.boseandroidmgr
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import local.boseqcultra2.android.ui.MainScreen
+import io.github.guilleml.boseandroidmgr.ui.MainScreen
 
 class MainActivity : ComponentActivity() {
     // `by viewModels()`: Android crea el ViewModel la primera vez y devuelve el mismo
