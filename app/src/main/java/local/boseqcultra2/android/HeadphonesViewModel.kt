@@ -125,6 +125,9 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
     val selectableModes: List<ModeSlot>
         get() = MENU_MODE_NAMES.mapNotNull { name -> modes.firstOrNull { it.name == name } }
 
+    /** Nombre de la ranura `index` según la última lista leída, o null si aún no se conoce. */
+    fun modeName(index: Int): String? = modes.firstOrNull { it.index == index }?.name
+
     /** Si el modo activo no es Quiet/Aware/Immersion (p. ej. uno personalizado), su nombre. */
     val currentOtherModeName: String?
         get() {
@@ -378,7 +381,11 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
             m.matches(0x02, 0x01, 0x06) -> finishRefresh() // fin del volcado del bloque 02 (§4)
             BoseDecode.isModeListStart(m) -> collectingModes = mutableListOf()
             BoseDecode.isModeListEnd(m) -> {
-                collectingModes?.let { modes = it.toList() }
+                collectingModes?.let {
+                    modes = it.toList()
+                    StateCache.saveSelectableModes(getApplication(), selectableModes)
+                    currentModeIndex?.let { i -> StateCache.saveMode(getApplication(), i, modeName(i)) }
+                }
                 collectingModes = null
             }
             else -> {
@@ -391,6 +398,7 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
                 BoseDecode.modeChangeAck(m)?.let {
                     currentModeIndex = it
                     if (pendingModeIndex == it) pendingModeIndex = null
+                    StateCache.saveMode(getApplication(), it, modeName(it))
                     return
                 }
                 BoseDecode.equalizer(m)?.let { bands ->
@@ -399,7 +407,11 @@ class HeadphonesViewModel(app: Application) : AndroidViewModel(app) {
                     bands.forEach { b -> if (pendingEq[b.index] == b.value) pendingEq.remove(b.index) }
                     return
                 }
-                BoseDecode.battery(m)?.let { battery = it; return }
+                BoseDecode.battery(m)?.let {
+                    battery = it
+                    StateCache.saveBattery(getApplication(), it)
+                    return
+                }
             }
         }
     }

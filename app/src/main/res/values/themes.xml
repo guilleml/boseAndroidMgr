@@ -5,4 +5,10 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+    <!-- Diálogo de modos del tile: ventana transparente; Compose dibuja el fondo oscurecido y la tarjeta. -->
+    <style name="Theme.BoseUltra.Picker" parent="Theme.BoseUltra">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
 </resources>

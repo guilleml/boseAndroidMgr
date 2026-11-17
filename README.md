@@ -9,8 +9,21 @@ counterpart of [BoseMenuBar](https://github.com/guilleml/BoseMenuBar) (macOS).
 > official app and a pair of earbuds owned by the author, for interoperability purposes. Use at your
 > own risk.
 
-**Status: work in progress.** Battery, mode and equalizer reading and changing work on a Pixel
-(Android 17). The full UI, automatic reconnection and a Quick Settings tile are next.
+## Features
+
+- **Battery** of the left and right earbuds and the case.
+- **Mode selector**: Quiet, Aware, Immersion (shows the name of a custom mode if one is active).
+- **Equalizer**: 3-band curve you can drag (sent on release), plus −/+ buttons and numeric fields.
+  Always shows the values confirmed by the earbuds.
+- **Pull to refresh** re-reads everything (or reconnects).
+- **Automatic reconnection** while the app is on screen: retries after 2, 5, 10 and 30 s, then waits
+  for the system to report that the earbuds have connected.
+- **Quick Settings tile**: shows the last known mode and battery; tap it to pick a mode in a small dialog.
+
+**Battery first**: the control channel is only open while the app (or the tile dialog) is on screen.
+In the background there is no connection, polling or retry, and the tile never opens the channel by
+itself. With the channel open, the earbuds were observed to take ~2.5 min longer to power off in the
+closed case.
 
 The app's user interface is currently in Spanish.
 
