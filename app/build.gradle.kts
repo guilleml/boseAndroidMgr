@@ -12,8 +12,8 @@ android {
         // 31 = Android 12: permiso BLUETOOTH_CONNECT sin los permisos de ubicación antiguos.
         minSdk = 31
         targetSdk = 37
-        versionCode = 2
-        versionName = "0.1.1"
+        versionCode = 3
+        versionName = "0.1.2"
     }
 
     // Firma de la release. Los datos van en ~/.gradle/gradle.properties (fuera del repo):

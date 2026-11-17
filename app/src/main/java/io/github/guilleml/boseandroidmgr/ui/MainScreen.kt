@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -55,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.guilleml.boseandroidmgr.ConnectionStatus
+import io.github.guilleml.boseandroidmgr.R
 import io.github.guilleml.boseandroidmgr.HeadphonesViewModel
 import io.github.guilleml.boseandroidmgr.protocol.EqBand
 
@@ -91,7 +93,7 @@ fun MainScreen(vm: HeadphonesViewModel, onRequestPermission: () -> Unit) {
 @Composable
 private fun Header(vm: HeadphonesViewModel, onRequestPermission: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(vm.deviceName ?: "Bose QC Ultra Earbuds", style = MaterialTheme.typography.headlineSmall)
+        Text(vm.deviceName ?: stringResource(R.string.app_name), style = MaterialTheme.typography.headlineSmall)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             if (vm.status == ConnectionStatus.Connecting) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
             Text(statusText(vm.status), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

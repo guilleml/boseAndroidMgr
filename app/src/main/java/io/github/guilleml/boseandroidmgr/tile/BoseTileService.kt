@@ -33,7 +33,7 @@ class BoseTileService : TileService() {
         val cached = StateCache.load(this)
 
         tile.icon = Icon.createWithResource(this, R.drawable.ic_tile)
-        tile.label = cached.modeName ?: "Bose Ultra"
+        tile.label = cached.modeName ?: getString(R.string.tile_label)
         tile.subtitle = batteryText(cached.left, cached.right, cached.case)
         tile.state = when {
             !hasPermission() -> Tile.STATE_INACTIVE

@@ -1,6 +1,6 @@
-# Bose QC Ultra Earbuds (2nd Gen) — Android control
+# Ultra2 Control — Android app for Bose QC Ultra Earbuds (2nd Gen)
 
-An Android app that shows the battery level and switches the noise cancelling mode and the
+**Ultra2 Control** (repository `boseAndroidMgr`) is an Android app that shows the battery level and switches the noise cancelling mode and the
 equalizer of the **Bose QuietComfort Ultra Earbuds (2nd generation)**. It is the Android
 counterpart of [BoseMenuBar](https://github.com/guilleml/BoseMenuBar) (macOS).
 
@@ -35,7 +35,7 @@ The app's user interface is currently in Spanish.
    the file manager) the first time.
 3. Pair the earbuds with the phone in the system Bluetooth settings, if they aren't already.
 4. Open the app and allow **Nearby devices** (Bluetooth) when asked.
-5. Optional: edit the Quick Settings panel and drag the **Bose Ultra** tile into it.
+5. Optional: edit the Quick Settings panel and drag the **Ultra2 Control** tile into it.
 
 Release APKs are signed with this certificate (SHA-256), so you can check them with
 `apksigner verify --print-certs`:
