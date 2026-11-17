@@ -1,6 +1,7 @@
 // Curva del ecualizador de 3 bandas que se arrastra con el dedo.
 //
 // - La curva dibuja SIEMPRE los valores confirmados por los auriculares.
+// - Solo se arrastra si el dedo empieza sobre un punto; no hay «tocar para fijar».
 // - Mientras se arrastra, o mientras un valor enviado espera confirmación, se dibuja un anillo
 //   en el valor pedido. El valor se envía al soltar, no en cada movimiento.
 //
@@ -9,8 +10,9 @@
 package local.boseqcultra2.android.ui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +36,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import local.boseqcultra2.android.protocol.EqBand
-import kotlin.math.abs
 import kotlin.math.roundToInt
 
 @Composable
@@ -68,33 +69,28 @@ fun EqualizerCurve(
             .height(220.dp)
             .pointerInput(enabled, min, max) {
                 if (!enabled) return@pointerInput
-                val geo = { Geometry(size.width.toFloat(), size.height.toFloat(), currentBands.size, min, max, 40.dp.toPx(), 16.dp.toPx(), 36.dp.toPx()) }
-                fun nearestBand(x: Float): Int? {
-                    val g = geo()
-                    val i = (0 until currentBands.size).minBy { abs(g.x(it) - x) }
-                    return if (abs(g.x(i) - x) <= 56.dp.toPx()) i else null
-                }
-                detectDragGestures(
-                    onDragStart = { start ->
-                        nearestBand(start.x)?.let { i -> draft = currentBands[i].index to geo().valueAt(start.y) }
-                    },
-                    onDrag = { change, _ ->
-                        draft?.let { (band, _) -> draft = band to geo().valueAt(change.position.y) }
-                    },
-                    onDragEnd = {
-                        draft?.let { (band, value) -> commit(band, value) }
-                        draft = null
-                    },
-                    onDragCancel = { draft = null },
-                )
-            }
-            .pointerInput(enabled, min, max) {
-                if (!enabled) return@pointerInput
-                // Un toque también fija el valor de la banda más cercana.
-                detectTapGestures { p ->
+                // Gesto a mano (no detectDragGestures): solo se "agarra" un punto si el dedo cae
+                // sobre él. Si no, el evento no se consume y lo recibe el desplazamiento de la
+                // pantalla o el «deslizar para actualizar». Así un swipe no cambia el EQ sin querer.
+                // `awaitEachGesture` repite el bloque para cada gesto (de dedo abajo a dedo arriba).
+                awaitEachGesture {
+                    val down = awaitFirstDown(requireUnconsumed = false)
                     val g = Geometry(size.width.toFloat(), size.height.toFloat(), currentBands.size, min, max, 40.dp.toPx(), 16.dp.toPx(), 36.dp.toPx())
-                    val i = (0 until currentBands.size).minBy { abs(g.x(it) - p.x) }
-                    if (abs(g.x(i) - p.x) <= 56.dp.toPx()) commit(currentBands[i].index, g.valueAt(p.y))
+                    val hitRadius = 28.dp.toPx()
+                    val i = currentBands.indices.firstOrNull { i ->
+                        (Offset(g.x(i), g.y(currentBands[i].value)) - down.position).getDistance() <= hitRadius
+                    } ?: return@awaitEachGesture
+                    down.consume()
+                    val band = currentBands[i].index
+                    draft = band to currentBands[i].value
+                    // drag() sigue al dedo hasta que se levanta (true) o se cancela el gesto (false).
+                    val completed = drag(down.id) { change ->
+                        draft = band to g.valueAt(change.position.y)
+                        change.consume()
+                    }
+                    val final = draft
+                    draft = null
+                    if (completed && final != null) commit(final.first, final.second) // se envía al soltar
                 }
             },
     ) {
